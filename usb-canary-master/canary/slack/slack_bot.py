@@ -1,4 +1,4 @@
-import slackclient
+#import slackclient
 import sys
 
 slack_client = None

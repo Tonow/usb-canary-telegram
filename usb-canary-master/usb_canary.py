@@ -33,15 +33,18 @@ from canary.message_handler import send_message
 from canary.screensaver import helpers
 from canary.slack import slack
 from canary.twilleo import twilleo
+from canary.telegram import telegram
 
 twilio_settings = None
 slack_settings = None
+telegram_settings = None
 
 
 class Usb_Canary(Daemon):
     def run(self):
         while True:
             self.main()
+            time.sleep(5)
 
     def main(self):
         options_file = settings.open_settings()
@@ -54,6 +57,10 @@ class Usb_Canary(Daemon):
         if options['slack']:
             global slack_settings
             slack_settings = slack.load_slack_settings()
+
+        if options['telegram']:
+            global telegram_settings
+            telegram_settings = telegram.load_telegram_settings()
 
         if settings.check_paranoid_set(options['paranoid']):
             paranoid_setting = options['paranoid']
@@ -94,6 +101,7 @@ class Usb_Canary(Daemon):
                     observer = pyudev.MonitorObserver(monitor, callback=self.set_device_event, name='monitor-observer')
                     observer.start()
                     settings.print_message('Observer started')
+                    time.sleep(2)
                 elif not paranoid:
                     observer = pyudev.MonitorObserver(monitor, callback=send_message, name='monitor-observer')
                     observer.start()
@@ -115,6 +123,7 @@ class Usb_Canary(Daemon):
         time.ctime()  # TODO: Do we need this line?
         if device.action == 'remove':
             fmt = '{0} - {1} reported a USB was {2.action}d from node {2.device_node}'
+            time.sleep(5)
         else:
             fmt = '{0} - {1} reported a USB was {2.action}ed to node {2.device_node}'
         alert = fmt.format(time.strftime('%l:%M%p %Z on %b %d, %Y'), socket.gethostname(), device)
@@ -132,6 +141,7 @@ if __name__ == '__main__':
         print("usage: %s start|stop|restart" % sys.argv[0])
         sys.exit(2)
     if func:
+        #daemon.run() # test
         sys.exit(func())
     else:
         print("Unknown command")

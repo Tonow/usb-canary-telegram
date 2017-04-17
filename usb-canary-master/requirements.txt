@@ -2,3 +2,4 @@ slackclient
 twilio
 pyudev
 sander-daemon
+telepot
