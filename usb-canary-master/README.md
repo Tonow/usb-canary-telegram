@@ -27,11 +27,9 @@ There are a couple of 3rd party libraries to get USB Canary running. Below we wi
 - [pyudev](https://github.com/pyudev/pyudev) - Python bindings to libudev (with support for PyQt4, PySide, pygobject and wx)
 - [sander-daemon](https://github.com/serverdensity/python-daemon) - Jejik daemon class improved by Server Density
 - [telepot](https://telepot.readthedocs.io/en/latest/#) - A Python framework for Telegram Bot API
-<<<<<<< HEAD
+
 
 If you choose telegram sender you don't oblige to install twilio or slack but ou need telepot
-=======
->>>>>>> 9e9cafa23d1fdf56c0fe687eb43c90243f77837c
 
 These can all be installed via `pip`, in some cases you may need to use `pip` with `sudo`. You can install the packages as follows:
 
@@ -89,18 +87,10 @@ An example `settings.json` file:
 ```
 
 Note that `paranoid`, `slack`, `twilio` and `telegram` are boolean values and should be set to `true` or `false`. If the file is formatted incorrectly and it cannot be parsed, you will get a `ValueError`, you can use [JSONLint](http://jsonlint.com/) if you find yourself having issues with this.
-<<<<<<< HEAD
 
 USB Canary, is sort of smart and can 'detect' if you are running `XScreenSaver` or `gnome-screensaver` on your
 computer, this is done by just checking which packages are installed via the `apt` library, if both of them are
 installed though, it will leave you to determine which one you are using - if you have an unsupported
-=======
-
-USB Canary, is sort of smart and can 'detect' if you are running `XScreenSaver` or `gnome-screensaver` on your
-computer, this is done by just checking which packages are installed via the `apt` library, if both of them are
-installed though, it will leave you to determine which one you are using - if you have an unsupported
->>>>>>> 9e9cafa23d1fdf56c0fe687eb43c90243f77837c
-screensaver, don't fret, you can still run it in paranoid mode.
 
 Paranoid mode is also suitable for people who want to monitor if their servers have had USB's plugged into them,
 although I haven't tested them on Linode, Amazon Web Services, or Digital Ocean it is suitable for those with
@@ -129,11 +119,7 @@ To use the [Telegram Bot API](https://core.telegram.org/bots/api), you first hav
 
 BotFather will give you a token, something like 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ. With the token in hand, you can start using telepot to access the bot account.
 
-<<<<<<< HEAD
 To now you're id_client search on you're telegram application **@my_id_bot** and click on **start** button
-=======
-To now you're id_client search on you're telegram application @my_id_bot and click on start button
->>>>>>> 9e9cafa23d1fdf56c0fe687eb43c90243f77837c
 
 ## Exit Codes
 
