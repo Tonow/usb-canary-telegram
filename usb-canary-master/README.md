@@ -26,6 +26,7 @@ There are a couple of 3rd party libraries to get USB Canary running. Below we wi
 - [twilio](https://github.com/twilio/twilio-python) - A Python module for communicating with the Twilio API and generating TwiML
 - [pyudev](https://github.com/pyudev/pyudev) - Python bindings to libudev (with support for PyQt4, PySide, pygobject and wx)
 - [sander-daemon](https://github.com/serverdensity/python-daemon) - Jejik daemon class improved by Server Density
+- [telepot](https://telepot.readthedocs.io/en/latest/#) - A Python framework for Telegram Bot API
 
 These can all be installed via `pip`, in some cases you may need to use `pip` with `sudo`. You can install the packages as follows:
 
@@ -57,6 +58,10 @@ An example `settings.json` file:
 ```json
 {
   "settings": {
+    "telegram": {
+      "bot_token": "321321321:AAszkjezkijkfIZit37pQW8-wyS4VADGHDTLA", 
+      "id_client": "111111111"
+    },
     "slack": {
       "api_key": "xoxb-111111111111-abcdefghijklmnopqrstuvwx",
       "botname": "slack bot name"
@@ -71,13 +76,14 @@ An example `settings.json` file:
       "paranoid": true,
       "screensaver": "xscreensaver",
       "slack": false,
-      "twilio": true
+      "twilio": false,
+      "telegram": true
     }
   }
 }
 ```
 
-Note that `paranoid`, `slack`, and `twilio` are boolean values and should be set to `true` or `false`. If the file is formatted incorrectly and it cannot be parsed, you will get a `ValueError`, you can use [JSONLint](http://jsonlint.com/) if you find yourself having issues with this.
+Note that `paranoid`, `slack`, `twilio` and `telegram` are boolean values and should be set to `true` or `false`. If the file is formatted incorrectly and it cannot be parsed, you will get a `ValueError`, you can use [JSONLint](http://jsonlint.com/) if you find yourself having issues with this.
  
 USB Canary, is sort of smart and can 'detect' if you are running `XScreenSaver` or `gnome-screensaver` on your 
 computer, this is done by just checking which packages are installed via the `apt` library, if both of them are 
@@ -105,6 +111,13 @@ To use the Twilio intergration you will need to get an:
 
 ### Slack
 To use the Slack integration you will need to [setup a bot user](https://api.slack.com/bot-users)
+
+### Telegram
+To use the [Telegram Bot API](https://core.telegram.org/bots/api), you first have to [get a bot account](http://www.instructables.com/id/Set-up-Telegram-Bot-on-Raspberry-Pi/) by chatting with [BotFather](https://core.telegram.org/bots#6-botfather).
+
+BotFather will give you a token, something like 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ. With the token in hand, you can start using telepot to access the bot account.
+
+To now you're id_client search on you're telegram application @my_id_bot and click on start button
 
 ## Exit Codes
 
