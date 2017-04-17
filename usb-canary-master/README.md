@@ -138,30 +138,34 @@ To now you're id_client search on you're telegram application **@my_id_bot** and
 I have tried to keep the code fairly segregated and straightforward to follow for those wishing to contribute.
 ```
 usb-canary
-├──LICENSE.txt
-├──settings.json
-├──canary
-│   ├──slack
-│   │   ├──slack.py
-│   │   ├──slack_bot.py
-│   │   └──__init__.py
-│   ├──settings.py
-│   ├──message_handler.py
-│   ├──setup.py
-│   ├──__init__.py
-│   ├──twilleo
-│   │   ├──__init__.py
-│   │   └──twilleo.py
-│   └──screensaver
-│       ├──helpers.py
-│       ├──gnome-screensaver.py
-│       ├──xscreensaver.py
-│       └──__init__.py
-├──README.md <---------------------------------- YOU ARE HERE
-├──requirements.txt
-├──ISSUE_TEMPLATE.md
-├──PULL_REQUEST_TEMPLATE.md
-└──usb_canary.py
+├── canary
+│   ├── __init__.py
+│   ├── message_handler.py
+│   ├── screensaver
+│   │   ├── gnome-screensaver.py
+│   │   ├── helpers.py
+│   │   ├── __init__.py
+│   │   └── xscreensaver.py
+│   ├── settings.py
+│   ├── slack
+│   │   ├── __init__.py
+│   │   ├── slack_bot.py
+│   │   └── slack.py
+│   ├── telegram
+│   │   ├── __init__.py
+│   │   ├── telegram_bot.py
+│   │   └── telegram.py
+│   └── twilleo
+│       ├── __init__.py
+│       └── twilleo.py
+├── CONTRIBUTING.md
+├── ISSUE_TEMPLATE.md
+├── LICENSE.txt
+├── PULL_REQUEST_TEMPLATE.md
+├── README.md <---------------------------------- YOU ARE HERE
+├── requirements.txt
+├── settings.json
+└── usb_canary.py
 ```
 Under the main `canary` directory you will find folders for different services such as Twilio which is named `twilleo`
 to avoid clashes with the Twilio library. Screensaver support can be found under the `screensaver` directory with each
@@ -175,6 +179,7 @@ Screensaver having their own file, just to keep things tidy.
 - [twilio](https://github.com/twilio/twilio-python) - A Python module for communicating with the Twilio API and generating TwiML
 - [python-apt](https://apt.alioth.debian.org/python-apt-doc/library/index.html) - A library that provides access to almost every functionality supported by the underlying apt-pkg and apt-inst libraries
 - [sander-daemon](https://github.com/serverdensity/python-daemon) - Jejik daemon class improved by Server Density
+- [telepot](https://telepot.readthedocs.io/en/latest/#) - A Python framework for Telegram Bot API
 
 ## Contributing
 
