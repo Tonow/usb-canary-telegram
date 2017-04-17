@@ -34,6 +34,7 @@ pip install slackclient
 pip install twilio
 pip install pyudev
 pip install sander-daemon
+pip install telepot
 ```
 
 Otherwise you can just run `pip install -r requirements.txt`
