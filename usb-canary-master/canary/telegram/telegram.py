@@ -24,6 +24,6 @@ def load_telegram_settings():
     if bot_token and id_client:
         sys.exit(128)
 
-    canary.telegram.telegram_bot.setup(telegram, id_client)
+    #canary.telegram.telegram_bot.setup(telegram, id_client) #No setup doing for this moment
 
     return telegram

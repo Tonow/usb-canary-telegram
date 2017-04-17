@@ -1,10 +1,18 @@
-'''
-from twilio import TwilioRestException
-from twilio.rest import TwilioRestClient
+try:
+    from twilio import TwilioRestException
+except ImportError, e:
+    if e.message != 'No module named TwilioRestException':
+        pass
+
+try:
+    from twilio.rest import TwilioRestClient
+except ImportError, e:
+    if e.message != 'No module named TwilioRestClient':
+        pass
 
 from canary.slack import slack_bot
 from canary import settings
-'''
+
 
 from canary.telegram import telegram_bot
 from canary import settings

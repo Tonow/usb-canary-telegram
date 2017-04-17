@@ -1,4 +1,8 @@
-#import slackclient
+try:
+    import slackclient
+except ImportError, e:
+    if e.message != 'No module named slackclient':
+        raise
 import sys
 
 slack_client = None

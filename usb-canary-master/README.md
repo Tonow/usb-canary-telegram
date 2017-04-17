@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) [![Build Status](https://travis-ci.org/probablynotablog/usb-canary.svg?branch=master)](https://travis-ci.org/probablynotablog/usb-canary)
 
-USB Canary is a Linux tool that uses pyudev to monitor USB devices either around the clock, or just while it's locked. It can be configured to send you an SMS via the Twilio API, or notify a Slack channel with it's inbuilt Slack bot. 
+USB Canary is a Linux tool that uses pyudev to monitor USB devices either around the clock, or just while it's locked. It can be configured to send you an SMS via the Twilio API, or notify a Slack channel with it's inbuilt Slack bot.
 
 ## About the Project
 USB Canary was a personal project started while between jobs after looking for a tool to monitor USB ports on my Linux computers while they were unattended, while there are many great tools already out there many require the user to login before they are notified - while many people would also argue to just turn USB ports off at a hardware level or fill them with epoxy, I still need my USB ports for keyboards and mice etc.
@@ -26,6 +26,9 @@ There are a couple of 3rd party libraries to get USB Canary running. Below we wi
 - [twilio](https://github.com/twilio/twilio-python) - A Python module for communicating with the Twilio API and generating TwiML
 - [pyudev](https://github.com/pyudev/pyudev) - Python bindings to libudev (with support for PyQt4, PySide, pygobject and wx)
 - [sander-daemon](https://github.com/serverdensity/python-daemon) - Jejik daemon class improved by Server Density
+- [telepot](https://telepot.readthedocs.io/en/latest/#) - A Python framework for Telegram Bot API
+
+If you choose telegram sender you don't oblige to install twilio or slack but ou need telepot
 
 These can all be installed via `pip`, in some cases you may need to use `pip` with `sudo`. You can install the packages as follows:
 
@@ -34,6 +37,7 @@ pip install slackclient
 pip install twilio
 pip install pyudev
 pip install sander-daemon
+pip install telepot
 ```
 
 Otherwise you can just run `pip install -r requirements.txt`
@@ -48,7 +52,7 @@ This library provides access to almost every functionality supported by the unde
 
 ### Installing
 
-Before running USB Canary, you will need to configure your `settings.json` file, which should be located in the root 
+Before running USB Canary, you will need to configure your `settings.json` file, which should be located in the root
 directory. If it is not found here, you will encounter an `IOError`.
 
 An example `settings.json` file:
@@ -56,6 +60,10 @@ An example `settings.json` file:
 ```json
 {
   "settings": {
+    "telegram": {
+      "bot_token": "321321321:AAszkjezkijkfIZit37pQW8-wyS4VADGHDTLA",
+      "id_client": "111111111"
+    },
     "slack": {
       "api_key": "xoxb-111111111111-abcdefghijklmnopqrstuvwx",
       "botname": "slack bot name"
@@ -70,30 +78,31 @@ An example `settings.json` file:
       "paranoid": true,
       "screensaver": "xscreensaver",
       "slack": false,
-      "twilio": true
+      "twilio": false,
+      "telegram": true
     }
   }
 }
 ```
 
-Note that `paranoid`, `slack`, and `twilio` are boolean values and should be set to `true` or `false`. If the file is formatted incorrectly and it cannot be parsed, you will get a `ValueError`, you can use [JSONLint](http://jsonlint.com/) if you find yourself having issues with this.
- 
-USB Canary, is sort of smart and can 'detect' if you are running `XScreenSaver` or `gnome-screensaver` on your 
-computer, this is done by just checking which packages are installed via the `apt` library, if both of them are 
-installed though, it will leave you to determine which one you are using - if you have an unsupported 
+Note that `paranoid`, `slack`, `twilio` and `telegram` are boolean values and should be set to `true` or `false`. If the file is formatted incorrectly and it cannot be parsed, you will get a `ValueError`, you can use [JSONLint](http://jsonlint.com/) if you find yourself having issues with this.
+
+USB Canary, is sort of smart and can 'detect' if you are running `XScreenSaver` or `gnome-screensaver` on your
+computer, this is done by just checking which packages are installed via the `apt` library, if both of them are
+installed though, it will leave you to determine which one you are using - if you have an unsupported
 screensaver, don't fret, you can still run it in paranoid mode.
- 
-Paranoid mode is also suitable for people who want to monitor if their servers have had USB's plugged into them, 
-although I haven't tested them on Linode, Amazon Web Services, or Digital Ocean it is suitable for those with 
+
+Paranoid mode is also suitable for people who want to monitor if their servers have had USB's plugged into them,
+although I haven't tested them on Linode, Amazon Web Services, or Digital Ocean it is suitable for those with
 physical servers that may need this sort of monitoring.
- 
+
 To start the application:
 ```shell
 ./usb_canary.py start | stop | restart
 ```
 
 ## Deployment
-The following will outline the basic steps to deploying USB Canary to Slack and Twilio. As extra services are 
+The following will outline the basic steps to deploying USB Canary to Slack and Twilio. As extra services are
 added, please ensure you add appropriate documentation with your PR.
 
 ### Twilio
@@ -104,6 +113,13 @@ To use the Twilio intergration you will need to get an:
 
 ### Slack
 To use the Slack integration you will need to [setup a bot user](https://api.slack.com/bot-users)
+
+### Telegram
+To use the [Telegram Bot API](https://core.telegram.org/bots/api), you first have to [get a bot account](http://www.instructables.com/id/Set-up-Telegram-Bot-on-Raspberry-Pi/) by chatting with [BotFather](https://core.telegram.org/bots#6-botfather).
+
+BotFather will give you a token, something like 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ. With the token in hand, you can start using telepot to access the bot account.
+
+To now you're id_client search on you're telegram application **@my_id_bot** and click on **start** button
 
 ## Exit Codes
 
@@ -116,6 +132,7 @@ To use the Slack integration you will need to [setup a bot user](https://api.sla
 | 125 | Screensaver conflict. | Screensaver detected, but both packages have been found. The user needs to be manually specified in the settings.json file |
 | 126 | Screensaver not found. | Screensaver not set, set incorrectly, or there was a problem detecting screensaver. Currently known working screensaver managers include: XScreenSaver and gnome-screensaver |
 | 127 | Option not found. | Option not set, or error in logic flow - see error message for more details |
+| 128 | Telegram credentials not provided. | telegram flag has been set, but credentials not provided, check settings.json |
 
 ## File Structure
 I have tried to keep the code fairly segregated and straightforward to follow for those wishing to contribute.
@@ -144,10 +161,10 @@ usb-canary
 ├──requirements.txt
 ├──ISSUE_TEMPLATE.md
 ├──PULL_REQUEST_TEMPLATE.md
-└──usb_canary.py 
+└──usb_canary.py
 ```
-Under the main `canary` directory you will find folders for different services such as Twilio which is named `twilleo` 
-to avoid clashes with the Twilio library. Screensaver support can be found under the `screensaver` directory with each 
+Under the main `canary` directory you will find folders for different services such as Twilio which is named `twilleo`
+to avoid clashes with the Twilio library. Screensaver support can be found under the `screensaver` directory with each
 Screensaver having their own file, just to keep things tidy.
 
 ## Built With

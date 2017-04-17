@@ -1,4 +1,9 @@
-import telepot
+try:
+    import telepot
+except ImportError, e:
+    if e.message != 'No module named telepot':
+        pass
+
 import sys
 
 telegram_server = None
@@ -7,12 +12,8 @@ id_client = None
 
 def setup(telegram, client):
     '''
-    global telegram_server
-    telegram_server = telepot.Bot.getMe(telegram['bot_token'])
-    global id_client
-    id_client = client
+    No setup doing for this moment
     '''
-    #print('setup ok')
 
 def run_bot(message, id_client, bot_token):
 
